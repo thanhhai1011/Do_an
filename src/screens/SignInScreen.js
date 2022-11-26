@@ -13,9 +13,29 @@ import Feather from 'react-native-vector-icons/Feather';
 import {Colors, Images} from '../contants';
 import {Separator, ToggleButton} from '../components';
 import {Display} from '../utils';
+import {AuthenicationService} from '../services';
+import Lottie from 'lottie-react-native';
 
 const SignInScreen = ({navigation}) => {
   const [isPassword, setIsPassword] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const signIn = async () => {
+    setIsLoading(true);
+    let user = {
+      username,
+      password,
+    };
+    AuthenicationService.login(user).then(response => {
+      setIsLoading(false);
+      if (!response.status) {
+        setErrorMessage(response?.message);
+      }
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -50,6 +70,7 @@ const SignInScreen = ({navigation}) => {
             placeholderTextColor={Colors.DEFAULT_GREY}
             selectionColor={Colors.DEFAULT_GREY}
             style={styles.inputText}
+            onChangeText={text => setUsername(text)}
           />
         </View>
       </View>
@@ -68,6 +89,7 @@ const SignInScreen = ({navigation}) => {
             selectionColor={Colors.DEFAULT_GREY}
             style={styles.inputText}
             secureTextEntry={isPassword ? false : true}
+            onChangeText={text => setPassword(text)}
           />
           <Feather
             name={isPassword ? 'eye' : 'eye-off'}
@@ -78,7 +100,7 @@ const SignInScreen = ({navigation}) => {
           />
         </View>
       </View>
-      <Text></Text>
+      <Text style={styles.errorMessage}>{errorMessage}</Text>
       <View style={styles.forgotPasswordContainer}>
         <View style={styles.toggleContainer}>
           <ToggleButton size={0.5} />
@@ -90,8 +112,15 @@ const SignInScreen = ({navigation}) => {
           Forgot Password
         </Text>
       </View>
-      <TouchableOpacity style={styles.signInButton} activeOpacity={0.8}>
-        <Text style={styles.signInButtonText}>Sign In</Text>
+      <TouchableOpacity
+        style={styles.signInButton}
+        activeOpacity={0.8}
+        onPress={() => signIn()}>
+        {isLoading ? (
+          <Lottie source={Images.LOADING} autoPlay />
+        ) : (
+          <Text style={styles.signInButtonText}>Sign In</Text>
+        )}
       </TouchableOpacity>
       <View style={styles.signUpContainer}>
         <Text style={styles.accountText}>Don't have an account?</Text>
@@ -284,5 +313,13 @@ const styles = StyleSheet.create({
   toggleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  errorMessage: {
+    fontSize: 10,
+    lineHeight: 10 * 1.4,
+    color: Colors.DEFAULT_RED,
+    fontWeight: '400',
+    marginHorizontal: 20,
+    marginTop: 5,
   },
 });
