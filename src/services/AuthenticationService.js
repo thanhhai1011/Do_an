@@ -3,11 +3,11 @@ import {ApiContants} from '../contants';
 
 const AuthRequest = axios.create({
   baseURL: ApiContants.BACKEND_API.BASE_API_URL,
+  responseType: 'json',
+  withCredentials: true
 });
 
 const register = async user => {
-  console.log('BA', ApiContants.BACKEND_API.BASE_API_URL);
-  console.log('user 1', user);
   if (!user?.username || !user?.email || !user?.password) {
     return {status: false, message: 'Please fill up all fields'};
   }
@@ -17,6 +17,7 @@ const register = async user => {
       email: user?.email,
       password: user?.password,
     };
+    console.log('requestBody', requestBody);
     let registerResponse = await AuthRequest.post(
       ApiContants.BACKEND_API.REGISTER,
       requestBody,

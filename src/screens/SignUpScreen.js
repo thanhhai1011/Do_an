@@ -7,33 +7,30 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Separator} from '../components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import {Colors, Images} from '../contants';
 import {Display} from '../utils';
 import {AuthenicationService} from '../services';
+import axios from 'axios';
 
 const SignUpScreen = ({navigation}) => {
   const [isPassword, setIsPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const register = () => {
+  const register = async () => {
     let user = {
       username,
       email,
       password,
     };
-    // setIsLoading(true);
     AuthenicationService.register(user).then(response => {
       console.log(response);
-      // setIsLoading(false);
-      // if (!response?.status) {
-      //   setErrorMessage(response?.message);
-      // }
     });
     // navigation.navigate('RegisterPhone')
   };
@@ -119,6 +116,7 @@ const SignUpScreen = ({navigation}) => {
           />
         </View>
       </View>
+      <Text style={styles.errorMessage}>{errorMessage}</Text>
       <TouchableOpacity
         style={styles.signInButton}
         activeOpacity={0.8}

@@ -1,5 +1,5 @@
-const config = require('../../package.json').projectConfig;
-const BACKEND_BASE_URL = config.backendApiBaseUrl;
+const config = require('../../package.json').proxy;
+const BACKEND_BASE_URL = config;
 
 const COUNTRY_FLAG = {
   BASE_URL: `https://countryflagsapi.com/png`,
