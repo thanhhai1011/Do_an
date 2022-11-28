@@ -85,9 +85,10 @@ const SignUpScreen = ({navigation}) => {
       console.log(response);
       if (!response.status) {
         setErrorMessage(response?.message);
+      } else {
+        navigation.navigate('SignIn');
       }
     });
-    // navigation.navigate('RegisterPhone')
   };
 
   const checkUserExist = async (type, value) => {

@@ -15,8 +15,10 @@ import {Separator, ToggleButton} from '../components';
 import {Display} from '../utils';
 import {AuthenicationService} from '../services';
 import Lottie from 'lottie-react-native';
+import {connect} from 'react-redux';
+import {GeneralAction} from '../actions';
 
-const SignInScreen = ({navigation}) => {
+const SignInScreen = ({navigation, setToken}) => {
   const [isPassword, setIsPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +33,7 @@ const SignInScreen = ({navigation}) => {
     };
     AuthenicationService.login(user).then(response => {
       setIsLoading(false);
+      setToken(response?.data)
       if (!response.status) {
         setErrorMessage(response?.message);
       }
@@ -151,7 +154,13 @@ const SignInScreen = ({navigation}) => {
   );
 };
 
-export default SignInScreen;
+const mapDispatchToProps = dispatch => {
+  return {
+    setToken: token => dispatch(GeneralAction.setToken(token)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SignInScreen);
 
 const styles = StyleSheet.create({
   container: {
