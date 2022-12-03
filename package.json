@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
     "axios": "0.27.2",
@@ -20,7 +21,8 @@
     "react-native-screens": "^3.18.0",
     "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.5",
-    "redux": "^4.2.0"
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -35,5 +37,5 @@
   "jest": {
     "preset": "react-native"
   },
-  "proxy": "http://192.168.1.6:3000"
+  "proxy": "http://192.168.8.41:3000"
 }

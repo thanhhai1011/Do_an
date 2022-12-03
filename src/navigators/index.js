@@ -1,6 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {connect} from 'react-redux';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {GeneralAction} from '../actions';
 import {
   ForgotPasswordScreen,
   HomeScreen,
@@ -14,15 +16,26 @@ import {
 
 const Stack = createNativeStackNavigator();
 
-const Navigators = ({token}) => {
-  console.log(token);
+const Navigators = () => {
+  const {isAppLoading, token, isFirstTimeUse} = useSelector(
+    state => state?.generalState,
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(GeneralAction.appStart());
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        {!token ? (
+        {isAppLoading ? (
+          <Stack.Screen name="Splash" component={SplashScreen} />
+        ) : !token || token === null || token === '' ? (
           <>
-            <Stack.Screen name="Splash" component={SplashScreen} />
-            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            {isFirstTimeUse && (
+              <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            )}
             <Stack.Screen name="SignIn" component={SignInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
             <Stack.Screen
@@ -40,10 +53,4 @@ const Navigators = ({token}) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    token: state.generalState.token,
-  };
-};
-
-export default connect(mapStateToProps)(Navigators);
+export default Navigators;

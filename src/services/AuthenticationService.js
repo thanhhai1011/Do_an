@@ -1,10 +1,12 @@
 import axios from 'axios';
 import {ApiContants} from '../contants';
+import {getToken} from '../Store';
+import {authHeader} from '../utils/Generator';
 
 const AuthRequest = axios.create({
   baseURL: ApiContants.BACKEND_API.BASE_API_URL,
   responseType: 'json',
-  withCredentials: true
+  withCredentials: true,
 });
 
 const register = async user => {
@@ -51,7 +53,7 @@ const login = async user => {
 
 const checkUserExist = async (type, value) => {
   try {
-    let params = {[type]: value}
+    let params = {[type]: value};
     let userCheckResponse = await AuthRequest.get(
       ApiContants.BACKEND_API.USER_EXIST,
       {params},
@@ -64,4 +66,21 @@ const checkUserExist = async (type, value) => {
   }
 };
 
-export default {register, checkUserExist, login};
+const refreshToken = async () => {
+  try {
+    let tokenResponse = await AuthRequest.get(
+      ApiContants.BACKEND_API.REFRESH_TOKEN,
+      {headers: authHeader(getToken())},
+    );
+    if (tokenResponse?.status === 200) {
+      return {status: true, data: tokenResponse?.data};
+    } else {
+      return {status: false};
+    }
+  } catch (error) {
+    console.log(error);
+    return {status: false, message: 'Oops! Something went wrong'};
+  }
+};
+
+export default {register, checkUserExist, login, refreshToken};
