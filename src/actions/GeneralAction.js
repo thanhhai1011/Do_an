@@ -30,7 +30,7 @@ const setIsFirstTimeUse = () => {
 };
 
 const appStart = () => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     StorageService.getFirstTimeUse().then(isFirstTimeUse => {
       dispatch({
         type: types.SET_FIRST_TIME_USE,
