@@ -4,15 +4,18 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {GeneralAction} from '../actions';
 import {
+  FoodScreen,
   ForgotPasswordScreen,
   HomeScreen,
   RegisterPhone,
+  RestaurantScreen,
   SignInScreen,
   SignUpScreen,
   SplashScreen,
   VerificationScreen,
   WelcomeScreen,
 } from '../screens';
+import HomeTabs from "./BottomTabs"
 
 const Stack = createNativeStackNavigator();
 
@@ -46,7 +49,11 @@ const Navigators = () => {
             <Stack.Screen name="Verification" component={VerificationScreen} />
           </>
         ) : (
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <>
+            <Stack.Screen name="HomeTabs" component={HomeTabs} />
+            <Stack.Screen name="Restaurant" component={RestaurantScreen} />
+            <Stack.Screen name="Food" component={FoodScreen} />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>

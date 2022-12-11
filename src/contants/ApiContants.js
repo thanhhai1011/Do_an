@@ -20,7 +20,10 @@ const BACKEND_API = {
   USER_EXIST: '/user-exist',
   USER: '/user',
   REFRESH_TOKEN: '/refresh-token',
-  RESTAURANT: '/restaurant'
+  RESTAURANT: '/restaurant',
+  CART: '/cart',
+  FOOD: '/food',
+  BOOKMARK: '/bookmark'
 };
 
 export default {COUNTRY_FLAG, BACKEND_API, STATIC_IMAGE};

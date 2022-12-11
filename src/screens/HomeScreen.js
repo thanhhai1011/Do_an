@@ -4,20 +4,33 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
 import {Colors, Fonts, Mock} from '../contants';
-import {CategoryMenuItem, RestaurantCard, Separator} from '../components';
+import {
+  CategoryMenuItem,
+  RestaurantCard,
+  RestaurantMediumCart,
+  Separator,
+} from '../components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import {useEffect} from 'react';
 import {RestaurantService} from '../services';
+import {Display} from '../utils';
+
+const sortStyle = isActive =>
+  isActive
+    ? styles.sortListItem
+    : {...styles.sortListItem, borderBottomColor: Colors.DEFAULT_WHITE};
 
 const HomeScreen = ({navigation}) => {
   const [activeCategory, setActiveCategory] = useState();
   const [restaurants, setRestaurants] = useState(null);
+  const [activeSortItem, setActiveSortItem] = useState('recent');
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -83,13 +96,14 @@ const HomeScreen = ({navigation}) => {
             <CategoryMenuItem
               name={name}
               logo={logo}
+              key={name}
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
             />
           ))}
         </View>
       </View>
-      <ScrollView style={styles.listContainer}>
+      <ScrollView style={styles.listContainer} key={restaurants?.id}>
         <View style={styles.horizontalListContainer}>
           <View style={styles.listHeader}>
             <Text style={styles.listHeaderTitle}>Top Rated</Text>
@@ -99,12 +113,54 @@ const HomeScreen = ({navigation}) => {
             data={restaurants}
             keyExtractor={item => item?.id}
             horizontal
+            showsHorizontalScrollIndicator={false}
             ListHeaderComponent={() => <Separator width={20} />}
             ListFooterComponent={() => <Separator width={20} />}
             ItemSeparatorComponent={() => <Separator width={10} />}
-            renderItem={({item}) => <RestaurantCard {...item} />}
+            renderItem={({item}) => (
+              <RestaurantCard
+                {...item}
+                navigate={(restaurantId) => navigation.navigate('Restaurant', {restaurantId})}
+              />
+            )}
           />
         </View>
+        <View style={styles.sortListContainer}>
+          <TouchableOpacity
+            style={sortStyle(activeSortItem === 'recent')}
+            activeOpacity={0.8}
+            onPress={() => setActiveSortItem('recent')}>
+            <Text style={styles.sortListItemText}>Recent</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={sortStyle(activeSortItem === 'favorite')}
+            activeOpacity={0.8}
+            onPress={() => setActiveSortItem('favorite')}>
+            <Text style={styles.sortListItemText}>Favorite</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={sortStyle(activeSortItem === 'rating')}
+            activeOpacity={0.8}
+            onPress={() => setActiveSortItem('rating')}>
+            <Text style={styles.sortListItemText}>Rating</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={sortStyle(activeSortItem === 'popular')}
+            activeOpacity={0.8}
+            onPress={() => setActiveSortItem('popular')}>
+            <Text style={styles.sortListItemText}>Popular</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={sortStyle(activeSortItem === 'trending')}
+            activeOpacity={0.8}
+            onPress={() => setActiveSortItem('trending')}>
+            <Text style={styles.sortListItemText}>Trending</Text>
+          </TouchableOpacity>
+        </View>
+        {restaurants?.map(item => (
+          <RestaurantMediumCart {...item} key={item?.id} />
+        ))}
+        <Separator height={Display.setHeight(5)} />
       </ScrollView>
     </View>
   );
@@ -213,7 +269,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginHorizontal: 20,
-    marginBottom: 10
+    marginBottom: 10,
   },
   listHeaderTitle: {
     color: Colors.DEFAULT_BLACK,
@@ -226,5 +282,27 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 13 * 1.4,
     fontFamily: Fonts.POPPINS_MEDIUM,
+  },
+  sortListContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: Colors.DEFAULT_WHITE,
+    marginTop: 8,
+    elevation: 1,
+  },
+  sortListItem: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.DEFAULT_YELLOW,
+    height: 40,
+  },
+  sortListItemText: {
+    color: Colors.DEFAULT_BLACK,
+    fontSize: 13,
+    lineHeight: 13 * 1.4,
+    fontFamily: Fonts.POPPINS_SEMI_BOLD,
   },
 });

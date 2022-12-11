@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
+    "@react-navigation/bottom-tabs": "^6.5.0",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
     "axios": "0.27.2",
@@ -37,5 +38,5 @@
   "jest": {
     "preset": "react-native"
   },
-  "proxy": "http://192.168.8.220:3000"
+  "proxy": "http://192.168.1.13:3000"
 }

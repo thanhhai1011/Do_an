@@ -4,16 +4,53 @@ import {Colors, Fonts} from '../contants';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StaticServiceImage} from '../services';
+import {useDispatch, useSelector} from 'react-redux';
+import {BookmarkAction} from '../actions';
 
-const RestaurantCard = ({id, name, images: {poster}, tags, distance, time}) => {
+const RestaurantCard = ({
+  id,
+  name,
+  images: {poster},
+  tags,
+  distance,
+  time,
+  navigate,
+}) => {
+  const dispatch = useDispatch();
+
+  const isBookmarked = useSelector(
+    state =>
+      state?.bookmarkState?.bookmarks?.filter(item => item?.restaurantId === id)
+        ?.length > 0,
+  );
+
+  const tagsSlice = tags.slice(0, 5);
+
+  const addBookmark = () =>
+    dispatch(BookmarkAction.addBookmark({restaurantId: id}));
+  const removeBookmark = () =>
+    dispatch(BookmarkAction.removeBookmark({restaurantId: id}));
+
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.8}>
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.8}
+      onPress={() => navigate(id)}>
+      <TouchableOpacity
+        onPress={() => (isBookmarked ? removeBookmark() : addBookmark())}
+        style={styles.bookmark}>
+        <Ionicons
+          name={isBookmarked ? 'bookmark' : 'bookmark-outline'}
+          color={Colors.DEFAULT_YELLOW}
+          size={24}
+        />
+      </TouchableOpacity>
       <Image
         source={{uri: StaticServiceImage.getPoster(poster)}}
         style={styles.posterStyle}
       />
       <Text style={styles.titleText}>{name}</Text>
-      <Text style={styles.tagText}>{tags?.join(' • ')}</Text>
+      <Text style={styles.tagText}>{tagsSlice?.join(' • ')}</Text>
       <View style={styles.footerContainer}>
         <View style={styles.rowAndCenter}>
           <Ionicons
@@ -117,5 +154,11 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: Fonts.POPPINS_BOLD,
     lineHeight: 10 * 1.4,
+  },
+  bookmark: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 10,
   },
 });
