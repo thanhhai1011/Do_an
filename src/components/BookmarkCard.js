@@ -8,11 +8,11 @@ import {StaticServiceImage} from '../services';
 import {useDispatch} from 'react-redux';
 import {BookmarkAction} from '../actions';
 
-const BookmarkCard = ({id, name, images, location, tags, navigate}) => {
+const BookmarkCard = ({_id, name, images, location, tags, navigate}) => {
   const dispatch = useDispatch();
 
   const removeBookmark = () =>
-    dispatch(BookmarkAction.removeBookmark({restaurantId: id}));
+    dispatch(BookmarkAction.removeBookmark({restaurantId: _id}));
   return (
     <View style={styles.container}>
       <Ionicons
@@ -22,7 +22,7 @@ const BookmarkCard = ({id, name, images, location, tags, navigate}) => {
         style={styles.remomveIcon}
         onPress={() => removeBookmark()}
       />
-      <TouchableOpacity activeOpacity={0.8} onPress={() => navigate(id)}>
+      <TouchableOpacity activeOpacity={0.8} onPress={() => navigate(_id)}>
         <Image
           source={{uri: StaticServiceImage.getPoster(images?.poster)}}
           style={styles.posterStyle}

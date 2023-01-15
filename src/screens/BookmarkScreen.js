@@ -38,7 +38,7 @@ const BookmarkScreen = ({navigation}) => {
       <FlatList
         style={styles.bookmarkList}
         data={bookmarks}
-        keyExtractor={item => item?.restaurantId}
+        keyExtractor={item => item?.restaurantID}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={() => <Separator height={10} />}
         ListFooterComponent={() => <Separator height={10} />}

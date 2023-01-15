@@ -13,12 +13,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Display} from '../utils';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {StorageService} from '../services';
 import {GeneralAction} from '../actions';
 
 const AccountScreen = ({navigation}) => {
   const dispatch = useDispatch();
+
+  const {userData} = useSelector(state => state?.generalState);
 
   const logout = () => {
     StorageService.setToken('').then(() => {
@@ -43,7 +45,7 @@ const AccountScreen = ({navigation}) => {
           color={Colors.DEFAULT_WHITE}
           onPress={() => navigation.goBack()}
         />
-        <Text style={styles.headerText}>Account</Text>
+        <Text style={styles.headerText}>Tài khoản</Text>
         <View>
           <Feather name="bell" size={20} color={Colors.DEFAULT_WHITE} />
           <View style={styles.alertBadge}>
@@ -56,12 +58,15 @@ const AccountScreen = ({navigation}) => {
           <Image style={styles.profileImage} source={Images.AVATAR} />
         </View>
         <View style={styles.profileTextContainer}>
-          <Text style={styles.nameText}>Ameen Farook</Text>
-          <Text style={styles.emailText}>ameeen.faroook@gmail.com</Text>
+          <Text style={styles.nameText}>{userData?.data?.username}</Text>
+          <Text style={styles.emailText}>{userData?.data?.email}</Text>
         </View>
       </View>
       <View style={styles.menuContainer}>
-        <TouchableOpacity style={styles.menuItem} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('OrderDetail')}>
           <View style={styles.menuIcon}>
             <MaterialCommunityIcons
               name="truck-fast-outline"
@@ -69,7 +74,7 @@ const AccountScreen = ({navigation}) => {
               color={Colors.DEFAULT_GREEN}
             />
           </View>
-          <Text style={styles.menuText}>My All {'\n'}Orders</Text>
+          <Text style={styles.menuText}>Đơn hàng {'\n'}của bạn</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem} activeOpacity={0.8}>
           <View style={{...styles.menuIcon, backgroundColor: Colors.LIGHT_RED}}>
@@ -79,7 +84,7 @@ const AccountScreen = ({navigation}) => {
               color={Colors.SECONDARY_RED}
             />
           </View>
-          <Text style={styles.menuText}>Offers {'&\n'} Promos</Text>
+          <Text style={styles.menuText}>Mã ưu đãi {'\n'}&của bạn</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem} activeOpacity={0.8}>
           <View
@@ -90,11 +95,11 @@ const AccountScreen = ({navigation}) => {
               color={Colors.DEFAULT_YELLOW}
             />
           </View>
-          <Text style={styles.menuText}>Delivery Addresses</Text>
+          <Text style={styles.menuText}>Địa chỉ giao hàng</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.mainContainer}>
-        <Text style={styles.sectionHeaderText}>My Account</Text>
+        <Text style={styles.sectionHeaderText}>Tài khoản của tôi</Text>
         <TouchableOpacity style={styles.sectionContainer} activeOpacity={0.8}>
           <View style={styles.sectionTextContainer}>
             <Ionicons
@@ -102,7 +107,7 @@ const AccountScreen = ({navigation}) => {
               size={18}
               color={Colors.DEFAULT_GREEN}
             />
-            <Text style={styles.sectionText}>Manage Profile</Text>
+            <Text style={styles.sectionText}>Quản lí tài khoản</Text>
           </View>
           <Feather
             name="chevron-right"
@@ -117,7 +122,7 @@ const AccountScreen = ({navigation}) => {
               size={18}
               color={Colors.DEFAULT_GREEN}
             />
-            <Text style={styles.sectionText}>Payment</Text>
+            <Text style={styles.sectionText}>Thanh toán</Text>
           </View>
           <Feather
             name="chevron-right"
@@ -126,23 +131,23 @@ const AccountScreen = ({navigation}) => {
           />
         </TouchableOpacity>
 
-        <Text style={styles.sectionHeaderText}>Notification</Text>
+        <Text style={styles.sectionHeaderText}>Thông báo</Text>
         <View style={styles.sectionContainer} activeOpacity={0.8}>
           <View style={styles.sectionTextContainer}>
             <Feather name="bell" size={18} color={Colors.DEFAULT_GREEN} />
-            <Text style={styles.sectionText}>Notification</Text>
+            <Text style={styles.sectionText}>Thông báo</Text>
           </View>
           <ToggleButton size={0.5} />
         </View>
         <View style={styles.sectionContainer} activeOpacity={0.8}>
           <View style={styles.sectionTextContainer}>
             <Feather name="bell" size={18} color={Colors.DEFAULT_GREEN} />
-            <Text style={styles.sectionText}>Promos & Offers Notification</Text>
+            <Text style={styles.sectionText}>Thông báo giảm giá</Text>
           </View>
           <ToggleButton size={0.5} />
         </View>
 
-        <Text style={styles.sectionHeaderText}>More</Text>
+        <Text style={styles.sectionHeaderText}>Khác</Text>
         <View style={styles.sectionContainer} activeOpacity={0.8}>
           <View style={styles.sectionTextContainer}>
             <Ionicons
@@ -164,7 +169,7 @@ const AccountScreen = ({navigation}) => {
               size={18}
               color={Colors.DEFAULT_GREEN}
             />
-            <Text style={styles.sectionText}>Logout</Text>
+            <Text style={styles.sectionText}>Đăng xuất</Text>
           </TouchableOpacity>
         </View>
       </View>

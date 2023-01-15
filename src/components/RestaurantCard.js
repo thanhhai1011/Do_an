@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {BookmarkAction} from '../actions';
 
 const RestaurantCard = ({
-  id,
+  _id,
   name,
   images: {poster},
   tags,
@@ -20,22 +20,22 @@ const RestaurantCard = ({
 
   const isBookmarked = useSelector(
     state =>
-      state?.bookmarkState?.bookmarks?.filter(item => item?.restaurantId === id)
+      state?.bookmarkState?.bookmarks?.filter(item => item?.restaurantID === _id)
         ?.length > 0,
   );
 
   const tagsSlice = tags.slice(0, 5);
 
   const addBookmark = () =>
-    dispatch(BookmarkAction.addBookmark({restaurantId: id}));
+    dispatch(BookmarkAction.addBookmark({restaurantId: _id}));
   const removeBookmark = () =>
-    dispatch(BookmarkAction.removeBookmark({restaurantId: id}));
+    dispatch(BookmarkAction.removeBookmark({restaurantId: _id}));
 
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={0.8}
-      onPress={() => navigate(id)}>
+      onPress={() => navigate(_id)}>
       <TouchableOpacity
         onPress={() => (isBookmarked ? removeBookmark() : addBookmark())}
         style={styles.bookmark}>

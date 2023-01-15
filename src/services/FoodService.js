@@ -5,6 +5,7 @@ import {getToken} from '../Store';
 
 const getOneFoodById = async foodId => {
   console.log(`FoodService | getOneFoodById`);
+  console.log('foodId getOneFoodById: ', foodId);
   try {
     let foodResponse = await axios.get(
       `${ApiContants.BACKEND_API.BASE_API_URL}${ApiContants.BACKEND_API.FOOD}/${foodId}`,

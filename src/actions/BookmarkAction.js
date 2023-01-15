@@ -6,6 +6,7 @@ const types = {
 };
 
 const addBookmark = ({restaurantId}) => {
+  console.log('addBookmark', restaurantId);
   return dispatch => {
     dispatch({
       type: types.SET_IS_LOADING,
@@ -32,6 +33,7 @@ const addBookmark = ({restaurantId}) => {
 };
 
 const removeBookmark = ({restaurantId}) => {
+  console.log('removeBookmark restaurantId', restaurantId);
   return dispatch => {
     dispatch({
       type: types.SET_IS_LOADING,

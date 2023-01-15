@@ -59,11 +59,11 @@ const SignInScreen = ({navigation}) => {
           size={30}
           onPress={() => navigation.goBack()}
         />
-        <Text style={styles.headerTitle}>Sign In</Text>
+        <Text style={styles.headerTitle}>Đăng nhập</Text>
       </View>
-      <Text style={styles.title}>Welcome to</Text>
+      <Text style={styles.title}>Chào mừng bạn</Text>
       <Text style={styles.content}>
-        Enter your username and password, and enjoy ordering food
+        Nhập tên người dùng và mật khẩu của bạn, và thưởng thức đặt món ăn
       </Text>
       <View style={styles.inputContainer}>
         <View style={styles.inputSubContainer}>
@@ -74,7 +74,7 @@ const SignInScreen = ({navigation}) => {
             style={{marginRight: 10}}
           />
           <TextInput
-            placeholder="Username"
+            placeholder="Tên đăng nhập"
             placeholderTextColor={Colors.DEFAULT_GREY}
             selectionColor={Colors.DEFAULT_GREY}
             style={styles.inputText}
@@ -92,7 +92,7 @@ const SignInScreen = ({navigation}) => {
             style={{marginRight: 10}}
           />
           <TextInput
-            placeholder="Password"
+            placeholder="Mật khẩu"
             placeholderTextColor={Colors.DEFAULT_GREY}
             selectionColor={Colors.DEFAULT_GREY}
             style={styles.inputText}
@@ -112,12 +112,12 @@ const SignInScreen = ({navigation}) => {
       <View style={styles.forgotPasswordContainer}>
         <View style={styles.toggleContainer}>
           <ToggleButton size={0.5} />
-          <Text style={styles.rememberText}>Remember me</Text>
+          <Text style={styles.rememberText}>Nhớ mật khẩu</Text>
         </View>
         <Text
           style={styles.forgotPasswordText}
           onPress={() => navigation.navigate('ForgotPassword')}>
-          Forgot Password
+          Quên mật khẩu
         </Text>
       </View>
       <TouchableOpacity
@@ -127,24 +127,24 @@ const SignInScreen = ({navigation}) => {
         {isLoading ? (
           <Lottie source={Images.LOADING} autoPlay />
         ) : (
-          <Text style={styles.signInButtonText}>Sign In</Text>
+          <Text style={styles.signInButtonText}>Đăng nhập</Text>
         )}
       </TouchableOpacity>
       <View style={styles.signUpContainer}>
-        <Text style={styles.accountText}>Don't have an account?</Text>
+        <Text style={styles.accountText}>Bạn chưa có tài khoản?</Text>
         <Text
           style={styles.signUpText}
           onPress={() => navigation.navigate('SignUp')}>
-          Sign Up
+          Đăng ký ngay!
         </Text>
       </View>
-      <Text style={styles.orText}>OR</Text>
+      <Text style={styles.orText}>Hoặc</Text>
       <TouchableOpacity style={styles.facebookButton}>
         <View style={styles.socialButtonContainer}>
           <View style={styles.signInButtonLogoContainer}>
             <Image source={Images.FACEBOOK} style={styles.SignInButtonLogo} />
           </View>
-          <Text style={styles.signInButtonText}>Connect with Facebook</Text>
+          <Text style={styles.signInButtonText}>Kết nối với Facebook</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.googleButton}>
@@ -152,7 +152,7 @@ const SignInScreen = ({navigation}) => {
           <View style={styles.signInButtonLogoContainer}>
             <Image source={Images.GOOGLE} style={styles.SignInButtonLogo} />
           </View>
-          <Text style={styles.signInButtonText}>Connect with Google</Text>
+          <Text style={styles.signInButtonText}>Kết nối với Google</Text>
         </View>
       </TouchableOpacity>
     </View>

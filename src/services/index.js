@@ -5,6 +5,7 @@ import RestaurantService from './RestaurantService';
 import CartService from './CartService';
 import FoodService from './FoodService';
 import BookmarkService from './BookmarkService';
+import BillService from './BillService'
 
 export {
   StaticServiceImage,
@@ -13,5 +14,6 @@ export {
   RestaurantService,
   CartService,
   FoodService,
-  BookmarkService
+  BookmarkService,
+  BillService
 };

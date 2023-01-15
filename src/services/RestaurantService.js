@@ -34,6 +34,7 @@ const getRestaurants = async () => {
 
 const getOneRestaurantById = async restaurantId => {
   console.log(`RestaurantsService | getOneRestaurantById`);
+  console.log('restaurantId ', restaurantId);
   try {
     let restaurantResponse = await axios.get(
       `${ApiContants.BACKEND_API.BASE_API_URL}${ApiContants.BACKEND_API.RESTAURANT}/${restaurantId}`,
@@ -41,6 +42,7 @@ const getOneRestaurantById = async restaurantId => {
         headers: authHeader(getToken()),
       },
     );
+    console.log('restaurantResponse', restaurantResponse);
     if (restaurantResponse?.status === 200) {
       return {
         status: true,

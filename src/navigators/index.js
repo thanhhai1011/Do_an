@@ -7,6 +7,8 @@ import {
   FoodScreen,
   ForgotPasswordScreen,
   HomeScreen,
+  OrderDetail,
+  OrderScreen,
   RegisterPhone,
   RestaurantScreen,
   SignInScreen,
@@ -53,6 +55,8 @@ const Navigators = () => {
             <Stack.Screen name="HomeTabs" component={HomeTabs} />
             <Stack.Screen name="Restaurant" component={RestaurantScreen} />
             <Stack.Screen name="Food" component={FoodScreen} />
+            <Stack.Screen name="Order" component={OrderScreen} />
+            <Stack.Screen name="OrderDetail" component={OrderDetail} />
           </>
         )}
       </Stack.Navigator>

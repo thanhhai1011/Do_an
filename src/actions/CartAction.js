@@ -6,6 +6,7 @@ const types = {
 };
 
 const addToCart = ({foodId}) => {
+  console.log('addToCart foodId', foodId);
   return dispatch => {
     dispatch({
       type: types.SET_IS_LOADING,

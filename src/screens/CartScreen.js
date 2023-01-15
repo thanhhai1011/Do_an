@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -14,10 +14,33 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Display} from '../utils';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {BillService} from '../services';
+import {CartAction} from '../actions';
 
 const CartScreen = ({navigation}) => {
   const cart = useSelector(state => state?.cartState?.cart);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CartAction.getCartItems());
+  }, [cart]);
+
+  const VND = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  });
+
+  const handleCheckout = () => {
+    BillService.addBill(cart).then(response => {
+      console.log('BillService: ', response);
+      if (response?.status) {
+        BillService.removeAllCart();
+        navigation.navigate('Order', {response});
+      }
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -33,7 +56,7 @@ const CartScreen = ({navigation}) => {
           size={30}
           onPress={() => navigation.goBack()}
         />
-        <Text style={styles.headerTitle}>My Cart</Text>
+        <Text style={styles.headerTitle}>Giỏ hàng</Text>
       </View>
       {cart?.cartItems?.length > 0 ? (
         <>
@@ -42,9 +65,9 @@ const CartScreen = ({navigation}) => {
               {cart?.cartItems?.map(item => (
                 <FoodCard
                   {...item?.food}
-                  key={item?.food?.id}
+                  key={item?.food?._id}
                   navigate={() =>
-                    navigation.navigate('Food', {foodId: item?.food?.id})
+                    navigation.navigate('Food', {foodId: item?.food?._id})
                   }
                 />
               ))}
@@ -52,7 +75,7 @@ const CartScreen = ({navigation}) => {
             <View style={styles.promoCodeContainer}>
               <View style={styles.rowAndCenter}>
                 <Entypo name="ticket" size={30} color={Colors.DEFAULT_YELLOW} />
-                <Text style={styles.promoCodeText}>Add Promo Code</Text>
+                <Text style={styles.promoCodeText}>Thêm mã khuyến mãi</Text>
               </View>
               <Ionicons
                 name="chevron-forward-outline"
@@ -62,42 +85,44 @@ const CartScreen = ({navigation}) => {
             </View>
             <View style={styles.amountContainer}>
               <View style={styles.amountSubContainer}>
-                <Text style={styles.amountLabelText}>Item Total</Text>
+                <Text style={styles.amountLabelText}>Tổng cộng</Text>
                 <Text style={styles.amountText}>
-                  $ {cart?.metaData?.itemsTotal?.toFixed(2)}
+                  {VND.format(cart?.metaData?.grandTotal)}
                 </Text>
               </View>
               <View style={styles.amountSubContainer}>
-                <Text style={styles.amountLabelText}>Discount</Text>
+                <Text style={styles.amountLabelText}>Giảm giá</Text>
                 <Text style={styles.amountText}>
-                  $ {cart?.metaData?.discount?.toFixed(2)}
+                  {VND.format(cart?.metaData?.discount)}
                 </Text>
               </View>
               <View style={styles.amountSubContainer}>
-                <Text style={styles.amountLabelText}>Delivery Fee</Text>
+                <Text style={styles.amountLabelText}>Giao hàng miễn phí</Text>
                 <Text
                   style={{...styles.amountText, color: Colors.DEFAULT_GREEN}}>
-                  Free
+                  Miễn phí
                 </Text>
               </View>
             </View>
             <View style={styles.totalContainer}>
-              <Text style={styles.totalText}>Total</Text>
+              <Text style={styles.totalText}>Tổng cộng</Text>
               <Text style={styles.totalText}>
-                $ {cart?.metaData?.grandTotal?.toFixed(2)}
+                {VND.format(cart?.metaData?.grandTotal)}
               </Text>
             </View>
-            <TouchableOpacity style={styles.checkoutButton}>
+            <TouchableOpacity
+              style={styles.checkoutButton}
+              onPress={() => handleCheckout()}>
               <View style={styles.rowAndCenter}>
                 <Ionicons
                   name="cart-outline"
                   color={Colors.DEFAULT_WHITE}
                   size={20}
                 />
-                <Text style={styles.checkoutText}>Checkout</Text>
+                <Text style={styles.checkoutText}>Tính tiền</Text>
               </View>
               <Text style={styles.checkoutText}>
-                $ {cart?.metaData?.grandTotal?.toFixed(2)}
+                {VND.format(cart?.metaData?.grandTotal)}
               </Text>
             </TouchableOpacity>
             <Separator height={Display.setHeight(9)} />
@@ -110,13 +135,11 @@ const CartScreen = ({navigation}) => {
             source={Images.EMPTY_CART}
             resizeMode="contain"
           />
-          <Text style={styles.emptyCartText}>Cart Empty</Text>
-          <Text style={styles.emptyCartSubText}>
-            Go ahead and order some tasty food
-          </Text>
+          <Text style={styles.emptyCartText}>Giỏ hàng trống</Text>
+          <Text style={styles.emptyCartSubText}>Đặt một số món ăn ngon</Text>
           <TouchableOpacity style={styles.addButtonEmpty}>
             <AntDesign name="plus" color={Colors.DEFAULT_WHITE} size={20} />
-            <Text style={styles.addButtonEmptyText}>Add Food</Text>
+            <Text style={styles.addButtonEmptyText}>Thêm thức ăn</Text>
           </TouchableOpacity>
           <Separator height={Display.setHeight(15)} />
         </View>

@@ -130,11 +130,11 @@ const SignUpScreen = ({navigation}) => {
           size={30}
           onPress={() => navigation.goBack()}
         />
-        <Text style={styles.headerTitle}>Sign Up</Text>
+        <Text style={styles.headerTitle}>Đăng ký</Text>
       </View>
-      <Text style={styles.title}>Create Account</Text>
+      <Text style={styles.title}>Tạo tài khoản</Text>
       <Text style={styles.content}>
-        Enter your email, choose a username and password
+        Nhập email của bạn, chọn tên người dùng và mật khẩu
       </Text>
       <View style={inputState(usernameState)}>
         <View style={styles.inputSubContainer}>
@@ -145,7 +145,7 @@ const SignUpScreen = ({navigation}) => {
             style={{marginRight: 10}}
           />
           <TextInput
-            placeholder="Username"
+            placeholder="Tên đăng nhập"
             placeholderTextColor={Colors.DEFAULT_GREY}
             selectionColor={Colors.DEFAULT_GREY}
             style={styles.inputText}
@@ -189,7 +189,7 @@ const SignUpScreen = ({navigation}) => {
             style={{marginRight: 10}}
           />
           <TextInput
-            placeholder="Password"
+            placeholder="Mật khẩu"
             placeholderTextColor={Colors.DEFAULT_GREY}
             selectionColor={Colors.DEFAULT_GREY}
             style={styles.inputText}
@@ -213,17 +213,17 @@ const SignUpScreen = ({navigation}) => {
         {isLoading ? (
           <Lottie source={Images.LOADING} autoPlay />
         ) : (
-          <Text style={styles.signInButtonText}>Create Account</Text>
+          <Text style={styles.signInButtonText}>Tạo tài khoản</Text>
         )}
       </TouchableOpacity>
       <Separator height={15} />
-      <Text style={styles.orText}>OR</Text>
+      <Text style={styles.orText}>hoặc</Text>
       <TouchableOpacity style={styles.facebookButton}>
         <View style={styles.socialButtonContainer}>
           <View style={styles.signInButtonLogoContainer}>
             <Image source={Images.FACEBOOK} style={styles.SignInButtonLogo} />
           </View>
-          <Text style={styles.signInButtonText}>Connect with Facebook</Text>
+          <Text style={styles.signInButtonText}>Kết nối với Facebook</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.googleButton}>
@@ -231,7 +231,7 @@ const SignUpScreen = ({navigation}) => {
           <View style={styles.signInButtonLogoContainer}>
             <Image source={Images.GOOGLE} style={styles.SignInButtonLogo} />
           </View>
-          <Text style={styles.signInButtonText}>Connect with Google</Text>
+          <Text style={styles.signInButtonText}>Kết nối với Google</Text>
         </View>
       </TouchableOpacity>
     </View>

@@ -31,16 +31,21 @@ const FoodScreen = ({
   const [food, setFood] = useState(null);
   const [selectedSubMenu, setSelectedSubMenu] = useState('Details');
 
+    const VND = new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    });
+
   const dispatch = useDispatch();
   const itemCount = useSelector(
     state =>
-      state?.cartState?.cart?.cartItems?.find(item => item?.foodId === foodId)
+      state?.cartState?.cart?.cartItems?.find(item => item?.foodID === foodId)
         ?.count,
   );
 
   useEffect(() => {
     FoodService.getOneFoodById(foodId).then(response => {
-      console.log(response?.data);
+      console.log('FoodService: ', response?.data);
       setFood(response?.data);
     });
   }, []);
@@ -70,7 +75,7 @@ const FoodScreen = ({
         <View style={styles.mainContainer}>
           <View style={styles.titleHeaderContainer}>
             <Text style={styles.titleText}>{food?.name}</Text>
-            <Text style={styles.priceText}>$ {food?.price}</Text>
+            <Text style={styles.priceText}>{VND.format(food?.price)}</Text>
           </View>
           <View style={styles.subHeaderContainer}>
             <View style={styles.rowAndCenter}>
@@ -88,7 +93,7 @@ const FoodScreen = ({
             </View>
             <View style={styles.rowAndCenter}>
               <Image style={styles.iconImage} source={Images.DELIVERY_CHARGE} />
-              <Text style={styles.deliveryText}>Free Delivery</Text>
+              <Text style={styles.deliveryText}>Giao hàng miễn phí</Text>
             </View>
           </View>
           <View style={styles.subMenuContainer}>
@@ -96,7 +101,7 @@ const FoodScreen = ({
               style={styles.subMenuButtonContainer}
               onPress={() => setSelectedSubMenu('Details')}>
               <Text style={setStyle(selectedSubMenu === 'Details')}>
-                Details
+                Chi tiết
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -111,13 +116,13 @@ const FoodScreen = ({
           <View style={styles.detailsContainer}>
             {food?.description ? (
               <>
-                <Text style={styles.detailHeader}>Description</Text>
+                <Text style={styles.detailHeader}>Miêu tả</Text>
                 <Text style={styles.detailContent}>{food?.description}</Text>
               </>
             ) : null}
             {food?.ingredients ? (
               <>
-                <Text style={styles.detailHeader}>Ingredients</Text>
+                <Text style={styles.detailHeader}>Thành phần</Text>
                 <Text style={styles.detailContent}>{food?.ingredients}</Text>
               </>
             ) : null}
@@ -143,7 +148,7 @@ const FoodScreen = ({
           style={styles.cartButton}
           onPress={() => navigation.navigate('Cart')}
           activeOpacity={0.8}>
-          <Text style={styles.cartButtonText}>Go to Cart</Text>
+          <Text style={styles.cartButtonText}>Đi đến giỏ hàng</Text>
         </TouchableOpacity>
       </View>
     </View>

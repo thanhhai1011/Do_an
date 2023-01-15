@@ -8,16 +8,22 @@ import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import {CartAction} from '../actions';
 
-const FoodCard = ({id, name, description, price, image, navigate}) => {
+const FoodCard = ({_id, name, description, price, image, navigate}) => {
   const dispatch = useDispatch();
   const itemCount = useSelector(
     state =>
-      state?.cartState?.cart?.cartItems?.find(item => item?.foodId === id)
+      state?.cartState?.cart?.cartItems?.find(item => item?.foodID === _id)
         ?.count,
   );
   const addToCart = foodId => dispatch(CartAction.addToCart({foodId}));
   const removeFromCart = foodId =>
     dispatch(CartAction.removeFromCart({foodId}));
+
+  const VND = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  });
+  
 
   return (
     <View style={styles.container}>
@@ -42,7 +48,7 @@ const FoodCard = ({id, name, description, price, image, navigate}) => {
           </Text>
         </TouchableOpacity>
         <View style={styles.footerContainer}>
-          <Text style={styles.priceText}>$ {price}</Text>
+          <Text style={styles.priceText}>{VND.format(price)}</Text>
           <View style={styles.itemAddContainer}>
             {itemCount > 0 ? (
               <TouchableOpacity
@@ -51,7 +57,7 @@ const FoodCard = ({id, name, description, price, image, navigate}) => {
                   alignItems: 'center',
                   flexDirection: 'row',
                 }}
-                onPress={() => removeFromCart(id)}
+                onPress={() => removeFromCart(_id)}
                 activeOpacity={0.8}>
                 <AntDesign
                   name="minus"
@@ -63,7 +69,7 @@ const FoodCard = ({id, name, description, price, image, navigate}) => {
             ) : null}
 
             <TouchableOpacity
-              onPress={() => addToCart(id)}
+              onPress={() => addToCart(_id)}
               activeOpacity={0.8}>
               <AntDesign name="plus" color={Colors.DEFAULT_YELLOW} size={18} />
             </TouchableOpacity>

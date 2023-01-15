@@ -78,7 +78,7 @@ const RestaurantScreen = ({
   const isBookmarked = useSelector(
     state =>
       state?.bookmarkState?.bookmarks?.filter(
-        item => item?.restaurantId === restaurantId,
+        item => item?.restaurantID === restaurantId,
       )?.length > 0,
   );
 
@@ -99,6 +99,13 @@ const RestaurantScreen = ({
             ),
           }}
           style={styles.backgroundImage}
+        />
+        <Ionicons
+          name="chevron-back-outline"
+          size={30}
+          onPress={() => navigation.goBack()}
+          style={{zIndex: 999, marginTop: 20}}
+          color={Colors.DEFAULT_WHITE}
         />
         <ScrollView>
           <Separator height={Display.setHeight(35)} />
@@ -180,10 +187,10 @@ const RestaurantScreen = ({
                 ?.filter(food => food?.category === selectedCategory)
                 ?.map(item => (
                   <FoodCard
-                    key={item?.id}
+                    key={item?._id}
                     {...item}
                     navigate={() =>
-                      navigation.navigate('Food', {foodId: item?.id})
+                      navigation.navigate('Food', {foodId: item?._id})
                     }
                   />
                 ))}

@@ -23,7 +23,8 @@ const BACKEND_API = {
   RESTAURANT: '/restaurant',
   CART: '/cart',
   FOOD: '/food',
-  BOOKMARK: '/bookmark'
+  BOOKMARK: '/bookmark',
+  BILL: '/bill'
 };
 
 export default {COUNTRY_FLAG, BACKEND_API, STATIC_IMAGE};

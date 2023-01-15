@@ -42,6 +42,7 @@ const HomeScreen = ({navigation}) => {
     });
     return unsubscribe;
   }, []);
+  console.log('restaurants ', restaurants);
   return (
     <View style={styles.container}>
       <StatusBar
@@ -58,8 +59,8 @@ const HomeScreen = ({navigation}) => {
             size={15}
             color={Colors.DEFAULT_WHITE}
           />
-          <Text style={styles.locationText}>Delivered to</Text>
-          <Text style={styles.selectedLocationText}>HOME</Text>
+          <Text style={styles.locationText}>Giao đến</Text>
+          <Text style={styles.selectedLocationText}>NHÀ</Text>
           <MaterialIcons
             name="keyboard-arrow-down"
             size={16}
@@ -82,7 +83,7 @@ const HomeScreen = ({navigation}) => {
               size={25}
               color={Colors.DEFAULT_GREY}
             />
-            <Text style={styles.searchText}>Search..</Text>
+            <Text style={styles.searchText}>Tìm kiếm..</Text>
           </View>
           <Feather
             name="sliders"
@@ -103,15 +104,13 @@ const HomeScreen = ({navigation}) => {
           ))}
         </View>
       </View>
-      <ScrollView style={styles.listContainer} key={restaurants?.id}>
+      <ScrollView style={styles.listContainer} key={restaurants?._id}>
         <View style={styles.horizontalListContainer}>
           <View style={styles.listHeader}>
-            <Text style={styles.listHeaderTitle}>Top Rated</Text>
-            <Text style={styles.listHeaderSubtitle}>See All</Text>
           </View>
           <FlatList
             data={restaurants}
-            keyExtractor={item => item?.id}
+            keyExtractor={item => item?._id}
             horizontal
             showsHorizontalScrollIndicator={false}
             ListHeaderComponent={() => <Separator width={20} />}
@@ -120,7 +119,9 @@ const HomeScreen = ({navigation}) => {
             renderItem={({item}) => (
               <RestaurantCard
                 {...item}
-                navigate={(restaurantId) => navigation.navigate('Restaurant', {restaurantId})}
+                navigate={restaurantId =>
+                  navigation.navigate('Restaurant', {restaurantId})
+                }
               />
             )}
           />
@@ -130,35 +131,35 @@ const HomeScreen = ({navigation}) => {
             style={sortStyle(activeSortItem === 'recent')}
             activeOpacity={0.8}
             onPress={() => setActiveSortItem('recent')}>
-            <Text style={styles.sortListItemText}>Recent</Text>
+            <Text style={styles.sortListItemText}>Gần đây</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={sortStyle(activeSortItem === 'favorite')}
             activeOpacity={0.8}
             onPress={() => setActiveSortItem('favorite')}>
-            <Text style={styles.sortListItemText}>Favorite</Text>
+            <Text style={styles.sortListItemText}>Yêu thích</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={sortStyle(activeSortItem === 'rating')}
             activeOpacity={0.8}
             onPress={() => setActiveSortItem('rating')}>
-            <Text style={styles.sortListItemText}>Rating</Text>
+            <Text style={styles.sortListItemText}>Xếp hạng</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={sortStyle(activeSortItem === 'popular')}
             activeOpacity={0.8}
             onPress={() => setActiveSortItem('popular')}>
-            <Text style={styles.sortListItemText}>Popular</Text>
+            <Text style={styles.sortListItemText}>Nổi tiếng</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={sortStyle(activeSortItem === 'trending')}
             activeOpacity={0.8}
             onPress={() => setActiveSortItem('trending')}>
-            <Text style={styles.sortListItemText}>Trending</Text>
+            <Text style={styles.sortListItemText}>Xu hướng</Text>
           </TouchableOpacity>
         </View>
         {restaurants?.map(item => (
-          <RestaurantMediumCart {...item} key={item?.id} />
+          <RestaurantMediumCart {...item} key={item?._id} />
         ))}
         <Separator height={Display.setHeight(5)} />
       </ScrollView>

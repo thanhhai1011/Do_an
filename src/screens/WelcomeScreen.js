@@ -86,7 +86,7 @@ const WelcomeScreen = ({navigation}) => {
           style={styles.gettingStartedButton}
           onPress={() => navigate()}
           activeOpacity={0.8}>
-          <Text style={styles.gettingStartedButtonText}>Get Started</Text>
+          <Text style={styles.gettingStartedButtonText}>Bắt đầu</Text>
         </TouchableOpacity>
       ) : (
         <View style={styles.buttonContainer}>
@@ -94,13 +94,13 @@ const WelcomeScreen = ({navigation}) => {
             activeOpacity={0.8}
             style={{marginLeft: 10}}
             onPress={() => welcomeList.current.scrollToEnd()}>
-            <Text style={styles.buttonText}>SKIP</Text>
+            <Text style={styles.buttonText}>Bỏ qua</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             activeOpacity={0.8}
             onPress={() => pageScroll()}>
-            <Text style={styles.buttonText}>NEXT</Text>
+            <Text style={styles.buttonText}>Tiếp tục</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: Colors.LIGHT_GREEN,
-    paddingVertical: 20,
+    paddingVertical: 25,
     paddingHorizontal: 11,
     borderRadius: 30,
   },

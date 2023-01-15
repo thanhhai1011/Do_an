@@ -17,7 +17,8 @@
     "axios": "0.27.2",
     "lottie-react-native": "^5.1.4",
     "react": "18.1.0",
-    "react-native": "0.70.2",
+    "react-native": "0.69.6",
+    "react-native-flipper": "0.163.0",
     "react-native-safe-area-context": "^4.4.1",
     "react-native-screens": "^3.18.0",
     "react-native-vector-icons": "^9.2.0",
@@ -38,5 +39,5 @@
   "jest": {
     "preset": "react-native"
   },
-  "proxy": "http://192.168.1.13:3000"
+  "proxy": "https://205e-171-240-132-177.ap.ngrok.io"
 }
