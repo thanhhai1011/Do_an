@@ -42,7 +42,6 @@ const HomeScreen = ({navigation}) => {
     });
     return unsubscribe;
   }, []);
-  console.log('restaurants ', restaurants);
   return (
     <View style={styles.container}>
       <StatusBar
